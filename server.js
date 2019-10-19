@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 
 // Load middlewares
-const { logger } = require("./middlewares/logger");
+const logger = require("./middlewares/logger");
 
 // Route files
 const bootcamps = require("./routes/bootcamps");
