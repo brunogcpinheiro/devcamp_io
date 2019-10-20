@@ -10,6 +10,7 @@ dotenv.config({ path: "./config/config.env" });
 
 // Load middlewares
 // const logger = require("./middlewares/logger");
+const errorHandler = require("./middlewares/error");
 
 // Connect to Database
 connectDB();
@@ -22,9 +23,6 @@ const app = express();
 //Body Parser
 app.use(express.json());
 
-// Mount middlewares
-//app.use(logger);
-
 // Development Logging Middleware
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -32,6 +30,10 @@ if (process.env.NODE_ENV === "development") {
 
 // Mount routes
 app.use("/api/v1/bootcamps", bootcamps);
+
+// Mount middlewares
+//app.use(logger);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
