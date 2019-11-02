@@ -1,13 +1,13 @@
-const fs = require("fs");
-const mongoose = require("mongoose");
-const colors = require("colors");
-const dotenv = require("dotenv");
+const fs = require('fs')
+const mongoose = require('mongoose')
+const colors = require('colors')
+const dotenv = require('dotenv')
 
 // Load env vars
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: './config/config.env' })
 
 // Load models
-const Bootcamp = require("./models/Bootcamp");
+const Bootcamp = require('./models/Bootcamp')
 
 // Connect to Database
 mongoose.connect(process.env.DATABASE_URI, {
@@ -15,35 +15,37 @@ mongoose.connect(process.env.DATABASE_URI, {
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true
-});
+})
 
 // Read JSON files
-const bootcamps = JSON.parse(fs.readFileSync(`${__dirname}/_data/bootcamps.json`, 'utf-8'));
+const bootcamps = JSON.parse(
+  fs.readFileSync(`${__dirname}/_data/bootcamps.json`, 'utf-8')
+)
 
 // Import data into Database
 const importData = async () => {
   try {
-    await Bootcamp.create(bootcamps);
-    console.log('Data imported...'.green.inverse);
-    process.exit();
+    await Bootcamp.create(bootcamps)
+    console.log('Data imported...'.green.inverse)
+    process.exit()
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 
 // Delete data from Database
 const deleteData = async () => {
   try {
-    await Bootcamp.deleteMany();
-    console.log('Data destroyed...'.red.inverse);
-    process.exit();
+    await Bootcamp.deleteMany()
+    console.log('Data destroyed...'.red.inverse)
+    process.exit()
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 
 if (process.argv[2] === '-i') {
-  importData();
+  importData()
 } else if (process.argv[2] === '-d') {
-  deleteData();
+  deleteData()
 }
